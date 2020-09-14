@@ -1,5 +1,5 @@
 # Intro-to-AI_course-assignments
-Assignment topics included:  
+Assignment topics include:  
   - Search algorithms and heuristics (weighted A* search, greedy best-first search) to solve Sokoban puzzles (a1)  
   - Constraint satisfaction problems to solve Futoshiki puzzles (a2)  
   - Game tree search (minimax algorithm, alpha-beta pruning) for an Othello agent (a3)  
