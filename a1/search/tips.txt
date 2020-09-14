@@ -1,0 +1,12 @@
+/** WRITE YOUR TIPS IN THIS FILE **/
+Tip #1:
+In your alternate heuristic function, it is important to determine whether it is impossible for a given state to reach a goal state (when a state is in "deadlock").
+For such states, you should give the heuristic value a very large number, like float("inf"), in order to accurately account for the fact that the goal will never be reached.
+
+Tip #2:
+A common cause of deadlock is when a box (not in a storage location) gets pushed into a corner, when boxes get pushed into a 2 by 2 group of 4, and when two boxes are pushed to be side by side along an edge. 
+Checking for these scenarios will cover many of the deadlock scenarios that can occur and greatly enhance your heuristic function.
+
+Tip #3:
+The computation of your heuristic can be time costly, depending on your approach.
+However, checking for all your deadlock scenarios first will allow you to simply return infinity if there is a deadlock and avoid spending time to compute the heuristic value.
