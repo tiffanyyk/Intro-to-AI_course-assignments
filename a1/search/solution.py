@@ -168,30 +168,7 @@ def heur_alternate(state):
                             if ((box_pos[0],box_pos[1]-1) in state.boxes) and (((box_pos[0]-1,box_pos[1]-1) in state.boxes) or ((box_pos[0]-1,box_pos[1]-1) in state.obstacles) or (box_pos[0]-1<0) or (box_pos[1]-1<0)): # check bottom for box and bottom left for wall
                                 heur = float("inf")
                                 return heur
-                        # above, checked diagonal for wall, obstacle, or box
-                # man_dist tracks manhattan distance to closest storage location
-                # reinitialize it to be the largest possible distance 
-#                if heur == float("inf"): # if heuristic is already infinity from box obst check, then quit boxes loop
-#                    return heur
-                
-#                man_dist = float("inf")
-#                for stor_pos in stor_locs:
-#                    temp_dist = abs(stor_pos[0]-box_pos[0])+abs(stor_pos[1]-box_pos[1])
-#                    if temp_dist < man_dist:
-#                        man_dist = temp_dist
-#                        stor_loc = stor_pos
-#                stor_locs.remove(stor_loc) # remove this storage location to avoid overlaps
-#                heur = heur + man_dist #add this man_dist to heuristic
-#            else: # if it's zero (not beside any obstacles)
-#                man_dist = float("inf")
-#                for stor_pos in stor_locs:
-#                    temp_dist = abs(stor_pos[0]-box_pos[0])+abs(stor_pos[1]-box_pos[1])
-#                    if temp_dist < man_dist:
-#                        man_dist = temp_dist
-#                        stor_loc = stor_pos
-#                stor_locs.remove(stor_loc) # remove this storage location to avoid overlaps
-#                heur = heur + man_dist #add this man_dist to heuristic
-        
+                        # above, checked diagonal for wall, obstacle, or box        
 
         ##### Part 3: Do edge / obstacle check #####
         # impossible to solve if box is at edge and no storage along that edge
@@ -233,7 +210,7 @@ def heur_alternate(state):
                                         blocked = True
                             if (blocked):
                                 heur = float("inf")
-                                return heur # breaks out of checking obstacles in way of storage
+                                return heur 
         
     for box_pos in state.boxes: # if heur is supposed to be inf, code would not reach this part... at this point we need to calc heur
         # if nothing has caused the function to return heur = inf so far, add manhattan distance to storage
@@ -247,8 +224,6 @@ def heur_alternate(state):
         heur = heur + man_dist #add this man_dist to heuristic
         
         ##### Part 2: Add closest robot's distance (-1) to heur ##### score is 4/20 better without this!!!
-        # don't check if box is already in spot, because box can be moved??? tester is 3q's better without if condition
-    #        if box_pos not in state.storage: # SEEMS TO BE BETTER WITHOUT THIS IF CONDITION
         rob_man_dist = float("inf")
         for rob_pos in state.robots:
             # find closest robot to the box
@@ -307,9 +282,8 @@ def anytime_weighted_astar(initial_state, heur_fn, weight=1., timebound = 10):
         if res_found: # keep going to find a better one
             best_res_found = res_found
             costbound = (res_found.gval-1, float("inf"),res_found.gval-1) #float("inf"))
-            weight = weight / 2.0 # added this line and the one below
+            weight = weight / 2.0 
             wastar_search.init_search(initial_state, sokoban_goal_state, heur_fn=heur_fn, fval_function=lambda sN: fval_function(sN, weight)) # initialize
-            # cannot keep f = g + h bound as the previous gval because heuristic may not be admissible
         else:
             return best_res_found
         
